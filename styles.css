@@ -15,6 +15,12 @@
   display: none;
 }
 
+.close{
+  width: 10px;
+  margin-left: 93%;
+  margin-right: 0;
+}
+
 .post-it .header {
   background-color: #c2c25b;
   text-align: right;

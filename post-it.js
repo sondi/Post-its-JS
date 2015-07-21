@@ -1,3 +1,4 @@
+
 var Board = function( selector ) {
   // Aqui denerá ir el código que tenga que ver con tu tablero 
   
@@ -8,8 +9,11 @@ var Board = function( selector ) {
   function initialize() {
     // Que debe de pasar cuando se crea un nuevo tablero?
       $elem.dblclick(function(event){
-      post_it = new PostIt(event.pageX, event.pageY);
-      $elem.append(post_it.$elem);
+      var target = $( event.target );
+      if (target.is('#board')){
+        post_it = new PostIt(event.pageX, event.pageY);
+        $elem.append(post_it.$elem);
+      }
     });
 
       $elem.on('click', '.close', function(){
@@ -20,21 +24,32 @@ var Board = function( selector ) {
   initialize();
 };
 
+
+
 var PostIt = function(x,y) {
   var self = this;
   function initialize(){
     self.$elem = $('.post-it').first().clone();
     self.style(x,y);
     self.draggable();
+    self.MovableToFront();
   };
   initialize();
   // Aquí va el código relacionado con un post-it
 };
 
+PostIt.zIndex = 0;
+
 PostIt.prototype.style = function(x,y) {
   this.$elem.css({
-      'left' : x,'top'  : y, "display": "block"
+      'left' : x,'top'  : y, "display": "block", "z-index": ++PostIt.zIndex
     });
+};
+
+PostIt.prototype.MovableToFront = function() {
+  this.$elem.on('mousedown', function(e){
+    $(this).css({"z-index": ++PostIt.zIndex});
+  });
 };
 
 PostIt.prototype.draggable = function() {
