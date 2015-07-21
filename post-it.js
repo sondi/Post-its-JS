@@ -1,29 +1,25 @@
 
 var Board = function( selector ) {
   // Aqui denerá ir el código que tenga que ver con tu tablero 
-  
   // Utiliza esta sintaxis para referirte al selector que representa al tablero.
   // De esta manera no dependerás tanto de tu HTML.  
-  var $elem = $( selector );
+  var $elem = $( selector )
   
   function initialize() {
     // Que debe de pasar cuando se crea un nuevo tablero?
-      $elem.dblclick(function(event){
+    $elem.dblclick(function(event){
       var target = $( event.target );
       if (target.is('#board')){
         post_it = new PostIt(event.pageX, event.pageY);
         $elem.append(post_it.$elem);
       }
     });
-
-      $elem.on('click', '.close', function(){
+    $elem.on('click', '.close', function(){
       $(this).closest('.post-it').remove();
     });
   };
-
   initialize();
 };
-
 
 
 var PostIt = function(x,y) {
@@ -42,8 +38,8 @@ PostIt.zIndex = 0;
 
 PostIt.prototype.style = function(x,y) {
   this.$elem.css({
-      'left' : x,'top'  : y, "display": "block", "z-index": ++PostIt.zIndex
-    });
+    'left' : x,'top'  : y, "display": "block", "z-index": ++PostIt.zIndex
+  });
 };
 
 PostIt.prototype.MovableToFront = function() {
@@ -54,15 +50,21 @@ PostIt.prototype.MovableToFront = function() {
 
 PostIt.prototype.draggable = function() {
   this.$elem.draggable({
-      handle: '.header'
+    handle: '.header'
   });
 };
 
 
 $(function() {
-  // Esta es la fucnión que correrá cuando este listo el DOM 
+  $('button').on('click', function(){
+    var board_name = prompt("Give your board a name");
+      event.preventDefault();
+      $('#navbar p').append(board_name + "<br>");
+      console.log('board_name');
+      $('#board').css({"background-color" : "black"});
+    })
   new Board('#board');
-
+  // Esta es la fucnión que correrá cuando este listo el DOM 
 });
 
 
