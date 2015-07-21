@@ -21,19 +21,23 @@ var PostIt = function() {
   // Aquí va el código relacionado con un post-it
 };
 
-// PostIt.prototype.close
 
 $(function() {
   // Esta es la fucnión que correrá cuando este listo el DOM 
   new Board('#board');
+  $('.post-it').draggable();
   $('#board').dblclick(function(x){
   console.log("click");
   post_it = new PostIt();
   (post_it.element).clone().appendTo($('#board')).css({
     'left' : x.pageX,'top'  : x.pageY
   });
-  $('.post-it').draggable({
-     handle: '.header'
+  $('#board').on('click', '.close', function(){
+    console.log(this);
+    // $('.header').parent().remove();
   });
+    $('.post-it').draggable({
+     handle: '.header'
+    });
   });
 });
